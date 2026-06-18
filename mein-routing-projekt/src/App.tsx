@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Link, Navigate } from "react-router-dom";
-import { useAuth } from "./context/AuthContext";
+import { useAuth } from "@clerk/clerk-react";
 import ProtectedRoute from "./components/ProtectedRoute";
 import AppLayout from "./components/AppLayout";
 import Home from "./pages/Home";
@@ -9,13 +9,13 @@ import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 
 function App() {
-  const { isAuthenticated } = useAuth();
+  const { isSignedIn } = useAuth();
 
   return (
     <BrowserRouter>
       <nav>
         <Link to="/">Startseite</Link> |{" "}
-        {!isAuthenticated && <Link to="/login">Login</Link>}
+        {!isSignedIn && <Link to="/login">Login</Link>}
       </nav>
 
       <Routes>
