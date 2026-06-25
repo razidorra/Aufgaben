@@ -4,6 +4,7 @@ import "./App.css";
 import { routeTree } from "./routeTree.gen";
 import { createRouter, RouterProvider } from "@tanstack/react-router";
 import { ClerkProvider } from "@clerk/clerk-react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 // Create a new router instance
 const router = createRouter({ routeTree });
@@ -21,10 +22,14 @@ if (!PUBLISHABLE_KEY) {
   throw new Error("Missing Clerk Publishable Key in .env");
 }
 
+const queryClient = new QueryClient();
+
 function App() {
   return (
     <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
-      <RouterProvider router={router} />
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+      </QueryClientProvider>
     </ClerkProvider>
   );
 }
